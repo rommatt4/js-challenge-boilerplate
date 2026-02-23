@@ -1,15 +1,75 @@
-# KinOcr
+# Kinsurance OCR (Stories 1-3)
 
-## Instructions
+Angular + TypeScript implementation of the Kin Insurance OCR take-home challenge for the senior track, covering:
 
-Your Kin recruiting contact should have sent you a set of instructions for this test.
+- User Story 1: CSV upload with validation (CSV only, max 2 MB)
+- User Story 2: Policy checksum validation and result display
+- User Story 3: Submit processed policy objects to API and show success/failure with response ID
 
-## How to use this boilerplate
+## Tech choices
 
-We are a Typescript-first shop and value your understanding of TS/JS over Angular. If you have never used Angular before, you can find the framework documentation here: https://angular.dev/overview.
+- Angular standalone components for modular, reusable UI
+- Pure utility functions for parsing and checksum logic
+- Single API service for network calls
+- Focus on readability, simple flow, and testability
 
-All of our applications are using the modern versions of Angular, so feel free to use [standalone components](https://angular.dev/essentials/components) and the [new control flow syntax](https://blog.angular.io/meet-angulars-new-control-flow-a02c6eee7843) to make it feel more like React, Vue or Svelt if that's what you are used to.
+## Project structure
 
-Feel free to remove routing or upgrade any of the dependencies if you need to.
+- `src/app/components/file-upload` - reusable CSV upload component
+- `src/app/components/policy-table` - reusable results table component
+- `src/app/components/status-alert` - reusable success/error feedback component
+- `src/app/services/policy-api.service.ts` - API integration
+- `src/app/utils/csv.util.ts` - CSV/file validation + parsing utilities
+- `src/app/utils/checksum.util.ts` - checksum validation utility
+- `src/app/models/policy.model.ts` - shared types
 
-Please use the `./sample.csv` file as input into your application.
+## Prerequisites
+
+- Node.js 20+ (recommended)
+- npm 10+ (recommended)
+
+## Setup
+
+```bash
+npm install
+```
+
+## Run locally
+
+```bash
+npm start
+```
+
+Open `http://localhost:4200/`.
+
+## Run tests
+
+```bash
+npm test
+```
+
+## Build
+
+```bash
+npm run build
+```
+
+## Behavior notes / assumptions
+
+- Policy numbers are treated as strings in memory to preserve leading zeros safely.
+- CSV parsing accepts comma-separated values across multiple lines and ignores non-numeric tokens.
+- Checksum expects exactly 9 digits per policy number, matching the challenge formula.
+- Empty/invalid CSV content fails gracefully with a clear UI message.
+
+## Accessibility and responsiveness
+
+- Semantic elements and accessible table labels are used.
+- Upload control includes labels and clear helper text.
+- Layout and table are responsive (mobile-safe, horizontal scroll for table when needed).
+- Styling uses the provided Kin color palette CSS variables.
+
+## Questions noted for Design/Product
+
+- Should rows with non-numeric values be shown as invalid rows, or skipped entirely?
+- Should duplicate policy numbers be preserved, deduplicated, or flagged?
+- Should API submission include metadata (uploaded filename, timestamp, user)?
